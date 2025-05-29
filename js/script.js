@@ -43,14 +43,19 @@ document.getElementById('donationForm').addEventListener('submit', function(e) {
 
     // Send email notification
     const templateParams = {
-        to_email: localStorage.getItem('userEmail'),
-        to_name: formData.name,
+        to_email: 'hopehubbfoundation@gmail.com', // Admin email
+        to_name: 'Admin',
+        from_name: formData.name,
         donation_type: formData.donation_type,
         address: formData.address,
-        message: formData.message || 'No additional message'
+        message: formData.message || 'No additional message',
+        mobile: formData.mobile
     };
 
-    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+    // Show loading message
+    document.getElementById('formMessage').textContent = 'Processing your donation...';
+
+    emailjs.send('hopehubfoundation_gmail', 'template_q2ui18a', templateParams)
         .then(function(response) {
             console.log('Email sent successfully:', response);
             document.getElementById('formMessage').textContent = 'Thank you for your donation! We will contact you soon.';
@@ -60,7 +65,7 @@ document.getElementById('donationForm').addEventListener('submit', function(e) {
             setTimeout(addSocialShareButtons, 1000);
         })
         .catch(function(error) {
-            console.log('Failed to send email:', error);
+            console.error('Failed to send email:', error);
             document.getElementById('formMessage').textContent = 'Thank you for your donation! We will contact you soon.';
             document.getElementById('donationForm').reset();
         });
@@ -176,7 +181,8 @@ const wishlistItems = [
         icon: 'fa-tshirt',
         target: 100,
         current: 45,
-        description: 'Winter clothes for children in need'
+        description: 'Winter clothes for children in need',
+        donation_type: 'clothes'
     },
     {
         id: 2,
@@ -184,7 +190,8 @@ const wishlistItems = [
         icon: 'fa-book',
         target: 200,
         current: 120,
-        description: 'Books and stationery for underprivileged students'
+        description: 'Books and stationery for underprivileged students',
+        donation_type: 'books'
     },
     {
         id: 3,
@@ -192,7 +199,8 @@ const wishlistItems = [
         icon: 'fa-cutlery',
         target: 150,
         current: 80,
-        description: 'Non-perishable food items for families'
+        description: 'Non-perishable food items for families',
+        donation_type: 'food'
     }
 ];
 
@@ -216,10 +224,30 @@ function updateWishlist() {
                         </div>
                     </div>
                     <p>${item.current} of ${item.target} items collected</p>
+                    <button class="btn1" onclick="donateForNeed('${item.donation_type}')">Donate Now</button>
                 </div>
             </div>
         </div>
     `).join('');
+}
+
+// Function to handle donation for specific need
+function donateForNeed(donationType) {
+    // Check if user is logged in
+    if (!localStorage.getItem('isLoggedIn')) {
+        alert('Please login to make a donation');
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Scroll to donation form
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    
+    // Set the donation type in the form
+    const donationSelect = document.getElementById('donation_type');
+    if (donationSelect) {
+        donationSelect.value = donationType;
+    }
 }
 
 // Social Sharing

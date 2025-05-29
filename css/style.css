@@ -412,6 +412,19 @@ footer .social a img{
     background-color: #007bff;
 }
 
+.wishlist-item .btn1 {
+    margin-top: 15px;
+    width: 100%;
+    padding: 8px 15px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.wishlist-item .btn1:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
 /* Social Share Buttons */
 .social-share {
     margin-top: 20px;
