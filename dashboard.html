@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Waste2Welfare Foundation</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .dashboard-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .donation-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        .donation-item:last-child {
+            border-bottom: none;
+        }
+        .status-pending { color: #ffc107; }
+        .status-completed { color: #28a745; }
+        .status-cancelled { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="fixed-top">
+        <header>
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-dark">
+                    <a class="navbar-brand" href="index.html">HopeHub</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html#home">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html#donation">Donations</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html#mission-id">Missions</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html#about">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html#contact">Contact</a>
+                            </li>
+                            <li class="nav-item auth-links">
+                                <!-- Auth links will be inserted here by JavaScript -->
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+    </div>
+
+    <section class="contact-section" style="margin-top: 120px;">
+        <div class="container">
+            <div class="heading">
+                <h2>Your Dashboard</h2>
+                <p>Welcome, <span id="userName"></span>!</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="dashboard-card">
+                        <h3>Profile Information</h3>
+                        <div id="profileInfo">
+                            <!-- Profile info will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-8">
+                    <div class="dashboard-card">
+                        <h3>Your Donations</h3>
+                        <div id="donationsList">
+                            <!-- Donations will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // Check if user is logged in
+        if (!localStorage.getItem('isLoggedIn')) {
+            window.location.href = 'login.html';
+        }
+
+        // Display user name
+        document.getElementById('userName').textContent = localStorage.getItem('userName');
+
+        // Load profile information
+        function loadProfile() {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.id === localStorage.getItem('userId'));
+            
+            if (user) {
+                document.getElementById('profileInfo').innerHTML = `
+                    <p><strong>Name:</strong> ${user.name}</p>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                `;
+            }
+        }
+
+        // Load donations
+        function loadDonations() {
+            const donations = JSON.parse(localStorage.getItem('donations') || '[]');
+            const userDonations = donations.filter(d => d.userId === localStorage.getItem('userId'));
+            
+            const donationsList = document.getElementById('donationsList');
+            if (userDonations.length === 0) {
+                donationsList.innerHTML = '<p>No donations yet. Start making a difference today!</p>';
+                return;
+            }
+
+            donationsList.innerHTML = userDonations.map(donation => `
+                <div class="donation-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Type:</strong> ${donation.donation_type}
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Date:</strong> ${new Date(donation.date).toLocaleDateString()}
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Status:</strong> 
+                            <span class="status-${donation.status.toLowerCase()}">${donation.status}</span>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <strong>Address:</strong> ${donation.address}
+                        </div>
+                    </div>
+                    ${donation.message ? `
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <strong>Message:</strong> ${donation.message}
+                            </div>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProfile();
+            loadDonations();
+        });
+    </script>
+</body>
+</html> 
