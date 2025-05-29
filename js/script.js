@@ -301,7 +301,11 @@ document.getElementById('volunteerForm')?.addEventListener('submit', function(e)
         phone: document.getElementById('volunteerPhone').value,
         interest: document.getElementById('volunteerInterest').value,
         message: document.getElementById('volunteerMessage').value,
-        date: new Date().toISOString()
+        date: new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        })
     };
 
     // Save volunteer data to localStorage
@@ -309,9 +313,39 @@ document.getElementById('volunteerForm')?.addEventListener('submit', function(e)
     volunteers.push(volunteerData);
     localStorage.setItem('volunteers', JSON.stringify(volunteers));
 
-    // Show success message
-    alert('Thank you for volunteering! We will contact you soon.');
-    this.reset();
+    // Send email notification
+    const templateParams = {
+        to_email: 'hopehubbfoundation@gmail.com',
+        to_name: 'Admin',
+        from_name: volunteerData.name,
+        volunteer_email: volunteerData.email,
+        phone: volunteerData.phone,
+        interest: volunteerData.interest,
+        message: volunteerData.message || 'No additional message',
+        date: volunteerData.date
+    };
+
+    // Show loading message
+    const formMessage = document.createElement('div');
+    formMessage.style.color = 'green';
+    formMessage.style.fontWeight = 'bold';
+    formMessage.textContent = 'Processing your volunteer request...';
+    this.appendChild(formMessage);
+
+    emailjs.send('hopehubfoundation_gmail', 'template_lk48aah', templateParams)
+        .then(function(response) {
+            console.log('Email sent successfully:', response);
+            formMessage.textContent = 'Thank you for volunteering! We will contact you within 24 hours.';
+            document.getElementById('volunteerForm').reset();
+            
+            // Update volunteer count in stats
+            updateStats();
+        })
+        .catch(function(error) {
+            console.error('Failed to send email:', error);
+            formMessage.style.color = 'red';
+            formMessage.textContent = 'There was an error processing your request. Please try again later.';
+        });
 });
 
 // Events Management
