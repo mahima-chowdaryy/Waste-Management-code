@@ -39,6 +39,9 @@
                                 <a class="nav-link" href="#donation">Donations</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="#request-help">Request Help</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="#mission-id">Missions</a>
                             </li>
                             <li class="nav-item">
@@ -98,6 +101,18 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="active-requests" style="background: #f8f9fa; padding: 50px 0;">
+        <div class="container">
+            <div class="heading">
+                <h2>Active Requests</h2>
+                <p>Help those in need</p>
+            </div>
+            <div class="row" id="activeRequestsList">
+                <!-- Active requests will be dynamically added here -->
             </div>
         </div>
     </section>
@@ -363,6 +378,86 @@
         </div>
     </section>
 
+    <section class="request-help-sec" id="request-help" style="padding: 50px 0;">
+        <div class="container">
+            <div class="heading">
+                <h2>Request Help</h2>
+                <p>We're here to help you</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="request-form-container">
+                        <h3>I Need Help</h3>
+                        <form id="requestHelpForm" class="contact-form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="requesterName" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" class="form-control" id="requesterPhone" placeholder="Phone Number" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="requesterEmail" placeholder="Email Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="requesterAddress" placeholder="Your Address" required>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" id="requestType" required>
+                                    <option value="">What do you need?</option>
+                                    <option value="food">Food</option>
+                                    <option value="clothes">Clothes</option>
+                                    <option value="footware">Footwear</option>
+                                    <option value="books">Books/Stationery</option>
+                                    <option value="gadget">Electronic Gadgets</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" id="requestDetails" rows="3" placeholder="Please describe your need in detail" required></textarea>
+                            </div>
+                            <button type="submit" class="btn1">Submit Request</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="report-need-form-container">
+                        <h3>Report a Need</h3>
+                        <p>Have you noticed someone in need? Let us know!</p>
+                        <form id="reportNeedForm" class="contact-form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="reporterName" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="tel" class="form-control" id="reporterPhone" placeholder="Phone Number" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="reporterEmail" placeholder="Email Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="needLocation" placeholder="Location where help is needed" required>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" id="reportedNeedType" required>
+                                    <option value="">Type of need</option>
+                                    <option value="food">Food</option>
+                                    <option value="clothes">Clothes</option>
+                                    <option value="footware">Footwear</option>
+                                    <option value="books">Books/Stationery</option>
+                                    <option value="gadget">Electronic Gadgets</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" id="needDescription" rows="3" placeholder="Please describe the situation" required></textarea>
+                            </div>
+                            <button type="submit" class="btn1">Report Need</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section class="contact-section" id="contact">
         <div class="container">
@@ -467,6 +562,7 @@
     </footer>
 
     <script src="js/script.js"></script>
+    <script src="js/requests.js"></script>
     <script>
         // Initialize EmailJS with your public key
         (function() {

@@ -617,3 +617,128 @@ footer .social a img{
         height: 250px;
     }
 }
+
+/* Request Help Section Styles */
+.request-help-sec {
+    background: #fff;
+}
+
+.request-form-container,
+.report-need-form-container {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.request-form-container h3,
+.report-need-form-container h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Active Requests Section */
+.active-requests {
+    background: #f8f9fa;
+}
+
+.request-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.request-card:hover {
+    transform: translateY(-5px);
+}
+
+.request-card h4 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.request-card .request-type {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.request-card .request-location {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.request-card .request-description {
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.request-card .request-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #888;
+}
+
+.request-card .request-status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.request-card .status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.request-card .status-urgent {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.request-card .status-fulfilled {
+    background: #d4edda;
+    color: #155724;
+}
+
+/* Form Styles */
+.contact-form .form-control {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.contact-form .form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.contact-form select.form-control {
+    height: 45px;
+}
+
+.contact-form textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .request-form-container,
+    .report-need-form-container {
+        padding: 20px;
+    }
+    
+    .request-card {
+        margin-bottom: 15px;
+    }
+}
